@@ -62,7 +62,10 @@ public class SolutionTree {
                 return result;
             }
         }
-        if (printSol) System.out.println("No solutions");
+        if (printSol){
+            System.out.println(root.board);
+            System.out.println("No solutions");
+        }
         return -1;
     }
 }
