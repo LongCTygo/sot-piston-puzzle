@@ -1,3 +1,4 @@
+
 # Sands Of Time's Piston Puzzle Solver
 A java program that can solve MCC's Sands Of Time's Piston Puzzle.
 What is the puzzle? Check out this [detailed document](https://docs.google.com/document/d/1ZbfKo57hn-H5eb_VkiYvJ5Ib-VdNfRtCjPyNy1HkyK8) made by edihau.
@@ -65,5 +66,6 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 | **.** | **.** | **.** | **.** |
 | **@** | **o** | **o** | **.** |
 | **o** | **.** | **o** | **.** |
+## Additional Infos (WIP)
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).
