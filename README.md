@@ -33,22 +33,27 @@ In binary they should look like this
     0000 0011 1011 1011 0011 0100
 
 Let's go through all of the bits one by one. Remember, the first bit is ignored.
+
 0**00**0 0011 1011 1011 0011 0100 **Bit 2 & 3**
+
 The 2nd and 3rd left-most bit are used to store the *rotation value* of the board. If the value of these 2 bits are both 0, then the position of the player is always inside the III quarter of the board (the bottom-left quarter). These 2 bits represent how many time the board should be rotated *counter-clockwise* to reach the position where the player is in that quarter.
 When generating the board, the board will generate a board with the player in the bottom-left quarter, then rotate it clockwise that many times to get the board of that seed.
 
 000**0 0**011 1011 1011 0011 0100 **Bit 4 & 5**
+
 These two bits represent the position of the player. As the player is always  located in the III quarter when the board generated (prior to rotation), these 2 bits represent where in that quarter the player is. The top-left corner is 0, then to the right, then to the next row. Imagine it like this:
 | 00 | 01 |
 |----|----|
 | **10** | **11** |
 
 0000 0**011 1011 1011 0011** 0100 **Bit 6 - 20**
+
 These 15 bits represent the remaining 15 slots on the board. A 0 represents that that slot is empty, while a 1 represents that a *box* is inside that slot.
 Similar to the player, it starts at the top left corner of the **board**, going to the right of the row, then to the next row. It skips the slot the player is in.
 
 
 0000 0011 1011 1011 0011 **0100** **Bit 21 - 24**
+
 The last 4 bits are the location of the goal. It starts at the top left corner of the **board**, going to the right of the row, then to the next row, like the two above.
 
 As an example, this is the board with the seed 100000. Try to convert the seed into the board.
