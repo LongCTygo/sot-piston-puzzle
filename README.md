@@ -26,8 +26,11 @@ Alternatively, you can download the .jar file in the releases page. Once downloa
 
 The seed is a 24-bit unsigned integer (0 - 2^23 - 1). Out of the 24 bits, only 23 are used, the first (left-most) bit is ignored. The seed can be either stored as just an integer, or a 6-characters hexadecimal seed.
 **For example:**
+
 03BB34 in hex
+
 244532 in decimal
+
 In binary they should look like this
 
     0000 0011 1011 1011 0011 0100
