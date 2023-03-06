@@ -5,18 +5,17 @@ import solver.SolutionTree;
 
 public class Main {
     public static void main(String[] args) {
-        int[][] b = {
-                {1,0,0,1},
-                {1,0,0,0},
-                {1,0,0,0},
-                {2,1,1,1},
-        };
-        Board board = new Board(b);
-        board.goal = new Vector2(3);
-        System.out.println(board);
-//        Board board = new Board(1494131);
-        Node root = new Node(board);
-        SolutionTree st = new SolutionTree(root);
-        int i = st.solveBFS(20, 10000000, true, true);
+        if (args.length == 0){
+            throw new RuntimeException("No arguments were supplied. At least 1 seed must be given.");
+        }
+        for (String seed : args){
+            try {
+                int s = Integer.parseInt(seed);
+                SolutionTree st = new SolutionTree(new Node(new Board(s)));
+                st.solveBFS(20,10000000,true,true);
+            } catch (NumberFormatException ex){
+                ex.printStackTrace();
+            }
+        }
     }
 }
