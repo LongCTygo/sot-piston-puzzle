@@ -60,7 +60,7 @@ Similar to the player, it starts at the top left corner of the **board**, going 
 
 The last 4 bits are the location of the goal. It starts at the top left corner of the **board**, going to the right of the row, then to the next row, like the two above.
 
-As an example, this is the board with the seed 100000. Try to convert the seed into the board.
+As an example, this is the board with the seed 100000. Try to convert the seed into a board.
 | x | . | o | o |
 |---|---|---|---|
 | **.** | **.** | **.** | **.** |
