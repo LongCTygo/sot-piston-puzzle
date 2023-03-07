@@ -440,4 +440,8 @@ public class Board {
         }
         return sb.toString();
     }
+
+    public boolean isGoalCovered(){
+        return board[goal.x][goal.y] != 0;
+    }
 }
