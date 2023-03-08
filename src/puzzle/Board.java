@@ -116,6 +116,61 @@ public class Board {
         return hexSeed;
     }
 
+    public int getDecimalSeed(){
+        Vector2 go = new Vector2(goal);
+        // 1 ignored
+        StringBuilder sb = new StringBuilder("0");
+        // 1-2 rotation value
+        int rotationalValue = getRotationalValue();
+        sb.append(getTinyBit(rotationalValue));
+        // Rotate player back to III
+        int[][] bo = null;
+        switch (rotationalValue) {
+            case 0:
+                // donothingbreak
+                bo = copyOfBoard();
+                break;
+            case 1:
+                bo = leftR();
+                go.leftRotateBoard();
+                break;
+            case 2:
+                bo = fullR();
+                go.fullRotateBoard();
+                break;
+            case 3:
+                bo = rightR();
+                go.rightRotateBoard();
+                break;
+        }
+        // 3-4 player location
+        int px = -1;
+        int py = -1;
+        // 5 - 19 board
+        StringBuilder b = new StringBuilder();
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+                if (bo[x][y] == 2) {
+                    px = x;
+                    py = y;
+                } else {
+                    b.append(bo[x][y]);
+                }
+            }
+        }
+        // throws ArrayIndexOutOfBoundException if board does not contain player
+        sb.append(px - 2);
+        sb.append(py);
+        sb.append(b.toString());
+        b = null;
+        // 20 - 23 goal
+        sb.append(getTinyBit(go.x));
+        sb.append(getTinyBit(go.y));
+        //Seed
+        String binarySeed = sb.toString();
+        return Integer.parseInt(binarySeed,2);
+    }
+
 
     private String getTinyBit(int value) {
         switch (value) {
@@ -443,5 +498,17 @@ public class Board {
 
     public boolean isGoalCovered(){
         return board[goal.x][goal.y] != 0;
+    }
+
+    public int getCoalCount(){
+        int coal = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (board[i][j] == 1){
+                    coal++;
+                }
+            }
+        }
+        return coal;
     }
 }
