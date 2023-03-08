@@ -39,6 +39,7 @@ public class Board {
         this.lastMove = new Move(dir, slot);
     }
 
+    @Deprecated
     public Board(String seed) {
         parseSeed(seed);
     }
@@ -71,22 +72,19 @@ public class Board {
         // Rotate player back to III
         int[][] bo = null;
         switch (rotationalValue) {
-            case 0:
-                // donothingbreak
-                bo = copyOfBoard();
-                break;
-            case 1:
+            case 0 -> bo = copyOfBoard();
+            case 1 -> {
                 bo = leftR();
                 go.leftRotateBoard();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 bo = fullR();
                 go.fullRotateBoard();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 bo = rightR();
                 go.rightRotateBoard();
-                break;
+            }
         }
         // 3-4 player location
         int px = -1;
@@ -106,18 +104,17 @@ public class Board {
         // throws ArrayIndexOutOfBoundException if board does not contain player
         sb.append(px - 2);
         sb.append(py);
-        sb.append(b.toString());
-        b = null;
+        sb.append(b);
         // 20 - 23 goal
         sb.append(getTinyBit(go.x));
         sb.append(getTinyBit(go.y));
         //Seed
         String binarySeed = sb.toString();
-        String hexSeed = BaseConversionUtil.binToHex(binarySeed);
+        StringBuilder hexSeed = new StringBuilder(BaseConversionUtil.binToHex(binarySeed));
         while (hexSeed.length() < 6) {
-            hexSeed = "0" + hexSeed;
+            hexSeed.insert(0, "0");
         }
-        return hexSeed;
+        return hexSeed.toString();
     }
 
     public int getDecimalSeed(){
@@ -131,7 +128,6 @@ public class Board {
         int[][] bo = null;
         switch (rotationalValue) {
             case 0:
-                // donothingbreak
                 bo = copyOfBoard();
                 break;
             case 1:
@@ -165,8 +161,7 @@ public class Board {
         // throws ArrayIndexOutOfBoundException if board does not contain player
         sb.append(px - 2);
         sb.append(py);
-        sb.append(b.toString());
-        b = null;
+        sb.append(b);
         // 20 - 23 goal
         sb.append(getTinyBit(go.x));
         sb.append(getTinyBit(go.y));
@@ -177,7 +172,7 @@ public class Board {
 
 
     /**
-     * Returns the first occurence of the player position on the board, in the form
+     * Returns the first occurrence of the player position on the board, in the form
      * of Vector2. Returns null if no players are found.
      *
      * @return player position
@@ -197,7 +192,7 @@ public class Board {
      * Attempt to move down at the position y.
      *
      * @param y Position of the push.
-     * @return
+     * @return the new Board
      */
     public Board moveDown(int y) {
         // Useless push
@@ -376,9 +371,7 @@ public class Board {
     private int[][] copyOfBoard(){
         int[][] newBoard = new int[4][4];
         for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                newBoard[x][y] = board[x][y];
-            }
+            System.arraycopy(board[x], 0, newBoard[x], 0, 4);
         }
         return newBoard;
     }
@@ -388,9 +381,11 @@ public class Board {
         if (seed.length() > 6) {
             throw new IllegalArgumentException("Seed length exceed 6.");
         } else if (seed.length() < 6) {
+            StringBuilder seedBuilder = new StringBuilder(seed);
             do {
-                seed = "0" + seed;
-            } while (seed.length() < 6);
+                seedBuilder.insert(0, "0");
+            } while (seedBuilder.length() < 6);
+            seed = seedBuilder.toString();
         }
         // Convert to binary
         String binarySeed = BaseConversionUtil.hexToBin(seed);
@@ -426,15 +421,9 @@ public class Board {
             goal = new Vector2(gx, gy);
             // Rotate
             switch (rotationValue) {
-                case 1:
-                    rightRotate();
-                    break;
-                case 2:
-                    rotate180();
-                    break;
-                case 3:
-                    leftRotate();
-                    break;
+                case 1 -> rightRotate();
+                case 2 -> rotate180();
+                case 3 -> leftRotate();
             }
             // Done
         } catch (NumberFormatException e) {
@@ -459,7 +448,7 @@ public class Board {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 16; i++) {
-            int x = (int) i / 4;
+            int x = i / 4;
             int y = i % 4;
             // If goal
             if (goal.isMatching(i)) {
