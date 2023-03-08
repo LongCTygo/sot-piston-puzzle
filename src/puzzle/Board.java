@@ -5,6 +5,8 @@ import math.Vector2;
 
 import java.util.Arrays;
 
+import static math.BaseConversionUtil.getTinyBit;
+
 public class Board {
     public static final int MIN_SEED = 0;
     public static final int MAX_SEED = 8388607;
@@ -57,6 +59,8 @@ public class Board {
         return goal;
     }
 
+
+    @Deprecated
     public String getSeed() {
         Vector2 go = new Vector2(goal);
         // 1 ignored
@@ -171,20 +175,6 @@ public class Board {
         return Integer.parseInt(binarySeed,2);
     }
 
-
-    private String getTinyBit(int value) {
-        switch (value) {
-            case 0:
-                return "00";
-            case 1:
-                return "01";
-            case 2:
-                return "10";
-            case 3:
-                return "11";
-        }
-        throw new IllegalArgumentException("Cannot convert.");
-    }
 
     /**
      * Returns the first occurence of the player position on the board, in the form

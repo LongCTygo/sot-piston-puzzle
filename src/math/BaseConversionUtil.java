@@ -27,4 +27,18 @@ public class BaseConversionUtil {
         String hex = Integer.toString(decimal,16);
         return hex;
     }
+
+    public static String getTinyBit(int value) {
+        switch (value) {
+            case 0:
+                return "00";
+            case 1:
+                return "01";
+            case 2:
+                return "10";
+            case 3:
+                return "11";
+        }
+        throw new IllegalArgumentException("Cannot convert.");
+    }
 }
