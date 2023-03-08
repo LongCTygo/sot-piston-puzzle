@@ -75,6 +75,6 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 - A simple board-to-seed converter GUI for easier use.
 - Improving the algorithms. And there are a lot to be improved.
 ## Note
-This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an enviroment like the Minecraft Championship, or to be expanded into programs that enabled such acts. Please do not use this for those purposes.
+This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an enviroment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).
