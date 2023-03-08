@@ -156,6 +156,7 @@ public class Node {
         }
     }
 
+    @Deprecated
     public int solveDFS(int maxDepth,boolean ignoreBadMoves){
         int depth = depth();
         //Check
