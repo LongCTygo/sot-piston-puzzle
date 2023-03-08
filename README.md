@@ -67,6 +67,14 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 | **.** | **.** | **.** | **.** |
 | **@** | **o** | **o** | **.** |
 | **o** | **.** | **o** | **.** |
+## The Algorithm (WIP)
 ## Additional Infos (WIP)
+## To-do List (WIP)
+- Make a mod that does all of these. It can go with a map for practicing purposes. Ideally just a map, but I don't think mcfunctions alone can achieve randomly generated levels (that are solvable, at least). One way to achieve this is likely to load all levels template into that map, then use /clone and some random scoreboard functions to pick one, but there are A LOT of puzzles, and I'm not sure how viable that is.
+- Alternatively, a web-based game/app for practicing could be achieved.
+- A simple board-to-seed converter GUI for easier use.
+- Improving the algorithms. And there are a lot to be improved.
+## Note
+This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an enviroment like the Minecraft Championship, or to be expanded into programs that enabled such acts. Please do not use this for those purposes.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).
