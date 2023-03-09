@@ -45,11 +45,7 @@ public class Board {
     }
 
     public Board(int seed) {
-        if (seed < MIN_SEED || seed > MAX_SEED) {
-            throw new IllegalArgumentException("Seed must be in range of 0 and 8388607");
-        }
-        String s = BaseConversionUtil.binToHex(Integer.toBinaryString(seed));
-        parseSeed(s);
+        parseSeed(seed);
     }
 
     public int[][] getBoard() {
@@ -376,7 +372,41 @@ public class Board {
         return newBoard;
     }
 
-    public void parseSeed(String seed) {
+    private void parseSeed(int seed){
+        int[] bitArray = BaseConversionUtil.toBinaryArray(seed);
+        //first 9 bits are ignored
+        // 9-10 Rotation value
+        int rotationValue = bitArray[9] * 2 + bitArray[10] * 2;
+        // 11-12 Player Position
+        int px = bitArray[11] * 2 + 2;
+        int py = bitArray[12];
+        board[px][py] = 2;
+        // 13 - 27 Board
+        int k = 13;
+        for (int x = 0; x < 4; x++) {
+            boolean rowOfPlayer = (px == x);
+            for (int y = 0; y < 4; y++) {
+                if (rowOfPlayer && py == y) {
+                    continue;
+                }
+                board[x][y] = bitArray[k];
+                k++;
+            }
+        }
+        //28-31 Goal
+        int gx = bitArray[28] * 2 + bitArray[29];
+        int gy = bitArray[30] * 2 + bitArray[31];
+        goal = new Vector2(gx, gy);
+        // Rotate
+        switch (rotationValue) {
+            case 1 -> rightRotate();
+            case 2 -> rotate180();
+            case 3 -> leftRotate();
+        }
+    }
+
+    @Deprecated
+    private void parseSeed(String seed) {
         // Check seed length
         if (seed.length() > 6) {
             throw new IllegalArgumentException("Seed length exceed 6.");
@@ -386,6 +416,7 @@ public class Board {
                 seedBuilder.insert(0, "0");
             } while (seedBuilder.length() < 6);
             seed = seedBuilder.toString();
+
         }
         // Convert to binary
         String binarySeed = BaseConversionUtil.hexToBin(seed);
@@ -489,5 +520,15 @@ public class Board {
             }
         }
         return coal;
+    }
+
+    public static class BoardBuilder{
+        int[][] board = new int[4][4];
+        Vector2 goal = new Vector2(0,0);
+        Move lastMove;
+
+        public BoardBuilder(){
+
+        }
     }
 }
