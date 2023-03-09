@@ -1,4 +1,3 @@
-
 # Sands Of Time's Piston Puzzle Solver
 A java program that can solve MCC's Sands Of Time's Piston Puzzle.
 What is the puzzle? Check out this [detailed document](https://docs.google.com/document/d/1ZbfKo57hn-H5eb_VkiYvJ5Ib-VdNfRtCjPyNy1HkyK8) made by edihau.
@@ -7,16 +6,17 @@ What is the puzzle? Check out this [detailed document](https://docs.google.com/d
 Clone this project into your IDE of choice (I use IntelliJ for this project), then do what you want with it.
 Alternatively, you can download the .jar file in the releases page. Once downloaded:
 
- - Open your console on your OS, then change your directory to the folder containing the downloaded jar.
- - Run `java -jar PistonPuzzleSolver.jar (args)`
- - For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all of the provided seeds and either solve them or provide an Exception and skip it.
- - Read below to see how seeds work.
+- Open your console on your OS, then change your directory to the folder containing the downloaded jar.
+- Run `java -jar PistonPuzzleSolver.jar (args)`
+- For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all of the provided seeds and either solve them or provide an Exception and skip it.
+- Read below to see how seeds work.
+- Alternatively, have your first argument be '-loop', and the program will instead wait for you to supply the seeds whilst running. It will end once you give it an empty input.
 
-**Common Exceptions:** 
+**Common Exceptions:**
 
- - java.lang.NumberFormatException: if you provided a seed that is not an integer. The code provides a way to use a 6-character hexadecimal seed for this, but it is not supported in the .jar file.
- - java.lang.IllegalArgumentException: if you provided a seed that is out of the range given above.
- - java.lang.RuntimeException: Should usually come with a message that said that you did not provide an argument. Happens when you run the jar file without any arguments.
+- java.lang.NumberFormatException: if you provided a seed that is not an integer. The code provides a way to use a 6-character hexadecimal seed for this, but it is not supported in the .jar file.
+- java.lang.IllegalArgumentException: if you provided a seed that is out of the range given above.
+- java.lang.RuntimeException: Should usually come with a message that said that you did not provide an argument. Happens when you run the jar file without any arguments.
 ## What does the program print out after solving the puzzle?
 - If a valid solution is found, the program will print out an in depth step-by-step instruction on how to solve it, with what move to do, and what the board looks like after that move.
 - If none is found, the program will print out the provided board, with the message "No solutions"
@@ -66,6 +66,14 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 | **.** | **.** | **.** | **.** |
 | **@** | **o** | **o** | **.** |
 | **o** | **.** | **o** | **.** |
+## The Algorithm (WIP)
 ## Additional Infos (WIP)
+## To-do List (WIP)
+- Make a mod that does all of these. It can go with a map for practicing purposes. Ideally just a map, but I don't think mcfunctions alone can achieve randomly generated levels (that are solvable, at least). One way to achieve this is likely to load all levels template into that map, then use /clone and some random scoreboard functions to pick one, but there are A LOT of puzzles, and I'm not sure how viable that is.
+- Alternatively, a web-based game/app for practicing could be achieved.
+- A simple board-to-seed converter GUI for easier use.
+- Improving the algorithms. And there are a lot to be improved.
+## Note
+This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an enviroment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).

@@ -56,15 +56,13 @@ public class Board {
         return goal;
     }
 
-
-    @Deprecated
-    public String getSeed() {
+    public int getSeed(){
         Vector2 go = new Vector2(goal);
-        // 1 ignored
-        StringBuilder sb = new StringBuilder("0");
+        int seed = 0;
+        // 0 ignored
         // 1-2 rotation value
         int rotationalValue = getRotationalValue();
-        sb.append(getTinyBit(rotationalValue));
+        seed += (int) Math.pow(2,21) * rotationalValue;
         // Rotate player back to III
         int[][] bo = null;
         switch (rotationalValue) {
@@ -86,84 +84,32 @@ public class Board {
         int px = -1;
         int py = -1;
         // 5 - 19 board
-        StringBuilder b = new StringBuilder();
+        int k = 18;
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 if (bo[x][y] == 2) {
                     px = x;
                     py = y;
                 } else {
-                    b.append(bo[x][y]);
+                    seed += (int) Math.pow(2,k) * bo[x][y];
+                    k--;
                 }
             }
         }
-        // throws ArrayIndexOutOfBoundException if board does not contain player
-        sb.append(px - 2);
-        sb.append(py);
-        sb.append(b);
+        // throws IllegalStateException if board does not contain player, or multiple players
+        if (px == -1 && py == -1){
+            throw new IllegalStateException("The board does not have a player.\n" + this);
+        }
+        if (k != 3){
+            throw new IllegalStateException("The board has more than one player.\n" + this);
+        }
+        seed += (int) Math.pow(2,20) * (px -2)
+                + (int) Math.pow(2,19) * (py);
         // 20 - 23 goal
-        sb.append(getTinyBit(go.x));
-        sb.append(getTinyBit(go.y));
+        seed += 4 * go.x;
+        seed += 1 * go.y;
         //Seed
-        String binarySeed = sb.toString();
-        StringBuilder hexSeed = new StringBuilder(BaseConversionUtil.binToHex(binarySeed));
-        while (hexSeed.length() < 6) {
-            hexSeed.insert(0, "0");
-        }
-        return hexSeed.toString();
-    }
-
-    public int getDecimalSeed(){
-        Vector2 go = new Vector2(goal);
-        // 1 ignored
-        StringBuilder sb = new StringBuilder("0");
-        // 1-2 rotation value
-        int rotationalValue = getRotationalValue();
-        sb.append(getTinyBit(rotationalValue));
-        // Rotate player back to III
-        int[][] bo = null;
-        switch (rotationalValue) {
-            case 0:
-                bo = copyOfBoard();
-                break;
-            case 1:
-                bo = leftR();
-                go.leftRotateBoard();
-                break;
-            case 2:
-                bo = fullR();
-                go.fullRotateBoard();
-                break;
-            case 3:
-                bo = rightR();
-                go.rightRotateBoard();
-                break;
-        }
-        // 3-4 player location
-        int px = -1;
-        int py = -1;
-        // 5 - 19 board
-        StringBuilder b = new StringBuilder();
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                if (bo[x][y] == 2) {
-                    px = x;
-                    py = y;
-                } else {
-                    b.append(bo[x][y]);
-                }
-            }
-        }
-        // throws ArrayIndexOutOfBoundException if board does not contain player
-        sb.append(px - 2);
-        sb.append(py);
-        sb.append(b);
-        // 20 - 23 goal
-        sb.append(getTinyBit(go.x));
-        sb.append(getTinyBit(go.y));
-        //Seed
-        String binarySeed = sb.toString();
-        return Integer.parseInt(binarySeed,2);
+        return seed;
     }
 
 
@@ -378,7 +324,7 @@ public class Board {
         // 9-10 Rotation value
         int rotationValue = bitArray[9] * 2 + bitArray[10] * 2;
         // 11-12 Player Position
-        int px = bitArray[11] * 2 + 2;
+        int px = bitArray[11] + 2;
         int py = bitArray[12];
         board[px][py] = 2;
         // 13 - 27 Board
