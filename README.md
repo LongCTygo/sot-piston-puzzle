@@ -8,22 +8,22 @@ Alternatively, you can download the .jar file in the releases page. Once downloa
 
 - Open your console on your OS, then change your directory to the folder containing the downloaded jar.
 - Run `java -jar PistonPuzzleSolver.jar (args)`
-- For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all of the provided seeds and either solve them or provide an Exception and skip it.
+- For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all the provided seeds and either solve them or provide an Exception and skip it.
 - Read below to see how seeds work.
 - Alternatively, have your first argument be '-loop', and the program will instead wait for you to supply the seeds whilst running. It will end once you give it an empty input.
 
 **Common Exceptions:**
 
-- java.lang.NumberFormatException: if you provided a seed that is not an integer. The code provides a way to use a 6-character hexadecimal seed for this, but it is not supported in the .jar file.
-- java.lang.IllegalArgumentException: if you provided a seed that is out of the range given above.
+- java.lang.NumberFormatException: if you provided a seed that is not an integer.
+- java.lang.IllegalArgumentException: if you provided a seed that is out of the range given above. This should not happen in the latest release, as the program now accept full 32-bit integer as a valid seed. The program will still only use the 23 bits it needs.
 - java.lang.RuntimeException: Should usually come with a message that said that you did not provide an argument. Happens when you run the jar file without any arguments.
 ## What does the program print out after solving the puzzle?
 - If a valid solution is found, the program will print out an in depth step-by-step instruction on how to solve it, with what move to do, and what the board looks like after that move.
 - If none is found, the program will print out the provided board, with the message "No solutions"
 - The '@' represents the player, 'o' represents a box, 'x' represents an empty goal, or it will be '#' instead if something is occupying that spot. (Either a box, or the player, the latter means it is solved).
-- Additionally, its runtime in miliseconds is also provided.
+- Additionally, its runtime in milliseconds is also provided.
 ## How does the seed system work?
-**WARNING: JANKY EXPLAINATIONS AND BROKEN ENGLISH DOWN BELOW**
+#### **WARNING: INCOMPLETE EXPLANATIONS AND BROKEN ENGLISH DOWN BELOW**
 
 The seed is a 24-bit unsigned integer (0 - 2^23 - 1). Out of the 24 bits, only 23 are used, the first (left-most) bit is ignored. The seed can be either stored as just an integer, or a 6-characters hexadecimal seed.
 **For example:**
@@ -32,15 +32,15 @@ The seed is a 24-bit unsigned integer (0 - 2^23 - 1). Out of the 24 bits, only 2
 
 244532 in decimal
 
-In binary they should look like this
+In binary, they should look like this
 
     0000 0011 1011 1011 0011 0100
 
-Let's go through all of the bits one by one. Remember, the first bit is ignored.
+Let's go through all the bits one by one. Remember, the first bit is ignored.
 
 0**00**0 0011 1011 1011 0011 0100 **Bit 2 & 3**
 
-The 2nd and 3rd left-most bit are used to store the *rotation value* of the board. If the value of these 2 bits are both 0, then the position of the player is always inside the III quarter of the board (the bottom-left quarter). These 2 bits represent how many time the board should be rotated *counter-clockwise* to reach the position where the player is in that quarter.
+The 2nd and 3rd left-most bit are used to store the *rotation value* of the board. If the value of these 2 bits are both 0, then the position of the player is always inside the III quarter of the board (the bottom-left quarter). These 2 bits represent how many times the board should be rotated *counter-clockwise* to reach the position where the player is in that quarter.
 When generating the board, the board will generate a board with the player in the bottom-left quarter, then rotate it clockwise that many times to get the board of that seed.
 
 000**0 0**011 1011 1011 0011 0100 **Bit 4 & 5**
@@ -53,12 +53,12 @@ These two bits represent the position of the player. As the player is always  lo
 0000 0**011 1011 1011 0011** 0100 **Bit 6 - 20**
 
 These 15 bits represent the remaining 15 slots on the board. A 0 represents that that slot is empty, while a 1 represents that a *box* is inside that slot.
-Similar to the player, it starts at the top left corner of the **board**, going to the right of the row, then to the next row. It skips the slot the player is in.
+Similar to the player, it starts in the top left corner of the **board**, going to the right of the row, then to the next row. It skips the slot the player is in.
 
 
 0000 0011 1011 1011 0011 **0100** **Bit 21 - 24**
 
-The last 4 bits are the location of the goal. It starts at the top left corner of the **board**, going to the right of the row, then to the next row, like the two above.
+The last 4 bits are the location of the goal. It starts in the top left corner of the **board**, going to the right of the row, then to the next row, like the two above.
 
 As an example, this is the board with the seed 100000. Try to convert the seed into a board.
 | x | . | o | o |
@@ -67,13 +67,13 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 | **@** | **o** | **o** | **.** |
 | **o** | **.** | **o** | **.** |
 ## The Algorithm (WIP)
-## Additional Infos (WIP)
+## Additional Info (WIP)
 ## To-do List (WIP)
 - Make a mod that does all of these. It can go with a map for practicing purposes. Ideally just a map, but I don't think mcfunctions alone can achieve randomly generated levels (that are solvable, at least). One way to achieve this is likely to load all levels template into that map, then use /clone and some random scoreboard functions to pick one, but there are A LOT of puzzles, and I'm not sure how viable that is.
 - Alternatively, a web-based game/app for practicing could be achieved.
 - A simple board-to-seed converter GUI for easier use.
 - Improving the algorithms. And there are a lot to be improved.
 ## Note
-This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an enviroment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
+This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an environment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).
