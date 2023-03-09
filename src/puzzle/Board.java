@@ -523,12 +523,35 @@ public class Board {
     }
 
     public static class BoardBuilder{
-        int[][] board = new int[4][4];
-        Vector2 goal = new Vector2(0,0);
-        Move lastMove;
+        private int[][] board = new int[4][4];
+        private Vector2 goal;
 
-        public BoardBuilder(){
+        public BoardBuilder(){}
+        public void setGoal(int x, int y){
+            goal = new Vector2(x,y);
+        }
 
+        public void setRow(int row, int[] args){
+            int r = 4 - row;
+            for (int i = 0; i < 4; i++){
+                board[r][i] = args[i];
+            }
+        }
+
+        public void setBoard(int[][] board){
+            if (board.length != 4){
+                throw new IllegalArgumentException("The argument for the board must be exactly 4x4");
+            }
+            for (int[] row : board){
+                if (row.length != 4){
+                    throw new IllegalArgumentException("The argument for the board must be exactly 4x4");
+                }
+            }
+            this.board = board.clone();
+        }
+
+        public Board build(){
+            return new Board(board,goal);
         }
     }
 }
