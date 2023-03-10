@@ -1,4 +1,4 @@
-package solver;
+package net.longct.pistonsolver.solver;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package math;
+package net.longct.pistonsolver.math;
 
 public class Vector2 {
     public int x;

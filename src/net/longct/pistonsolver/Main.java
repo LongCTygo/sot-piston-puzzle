@@ -1,7 +1,8 @@
+package net.longct.pistonsolver;
 
-import puzzle.Board;
-import solver.Node;
-import solver.SolutionTree;
+import net.longct.pistonsolver.puzzle.Board;
+import net.longct.pistonsolver.solver.Node;
+import net.longct.pistonsolver.solver.SolutionTree;
 
 import java.util.Scanner;
 

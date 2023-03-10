@@ -1,14 +1,14 @@
-package solver;
+package net.longct.pistonsolver.solver;
 
-import puzzle.Board;
-import puzzle.Move;
+import net.longct.pistonsolver.puzzle.Board;
+import net.longct.pistonsolver.puzzle.Move;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  *
- * @author ADMIN
+ * @author LongCT_
  */
 public class Node {
     final double SMART_LIMIT = 1.5;
@@ -132,8 +132,8 @@ public class Node {
     }
 
     public void printSolutions(){
-        Stack<Board> stack1 = new Stack<>();
-        Stack<Move> stack2 = new Stack<>();
+        ArrayDeque<Board> stack1 = new ArrayDeque<>();
+        ArrayDeque<Move> stack2 = new ArrayDeque<>();
         Node p = this;
         while (p!=null){
             stack1.push(p.board);

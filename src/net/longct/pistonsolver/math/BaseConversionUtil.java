@@ -1,6 +1,4 @@
-package math;
-
-import java.util.ArrayList;
+package net.longct.pistonsolver.math;
 
 public class BaseConversionUtil {
     public static String hexToBin(String hex){

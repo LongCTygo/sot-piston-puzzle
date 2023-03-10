@@ -1,6 +1,6 @@
 # Sands Of Time's Piston Puzzle Solver
 A java program that can solve MCC's Sands Of Time's Piston Puzzle.
-What is the puzzle? Check out this [detailed document](https://docs.google.com/document/d/1ZbfKo57hn-H5eb_VkiYvJ5Ib-VdNfRtCjPyNy1HkyK8) made by edihau.
+What is the net.longct.pistonsolver.puzzle? Check out this [detailed document](https://docs.google.com/document/d/1ZbfKo57hn-H5eb_VkiYvJ5Ib-VdNfRtCjPyNy1HkyK8) made by edihau.
 
 ## How do I use this?
 Clone this project into your IDE of choice (I use IntelliJ for this project), then do what you want with it.
@@ -17,7 +17,7 @@ Alternatively, you can download the .jar file in the releases page. Once downloa
 - java.lang.NumberFormatException: if you provided a seed that is not an integer.
 - java.lang.IllegalArgumentException: if you provided a seed that is out of the range given above. This should not happen in the latest release, as the program now accept full 32-bit integer as a valid seed. The program will still only use the 23 bits it needs.
 - java.lang.RuntimeException: Should usually come with a message that said that you did not provide an argument. Happens when you run the jar file without any arguments.
-## What does the program print out after solving the puzzle?
+## What does the program print out after solving the net.longct.pistonsolver.puzzle?
 - If a valid solution is found, the program will print out an in depth step-by-step instruction on how to solve it, with what move to do, and what the board looks like after that move.
 - If none is found, the program will print out the provided board, with the message "No solutions"
 - The '@' represents the player, 'o' represents a box, 'x' represents an empty goal, or it will be '#' instead if something is occupying that spot. (Either a box, or the player, the latter means it is solved).
@@ -74,6 +74,6 @@ As an example, this is the board with the seed 100000. Try to convert the seed i
 - A simple board-to-seed converter GUI for easier use.
 - Improving the algorithms. And there are a lot to be improved.
 ## Note
-This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an environment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
+This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a net.longct.pistonsolver.puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an environment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).

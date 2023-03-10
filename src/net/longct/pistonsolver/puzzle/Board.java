@@ -1,11 +1,9 @@
-package puzzle;
+package net.longct.pistonsolver.puzzle;
 
-import math.BaseConversionUtil;
-import math.Vector2;
+import net.longct.pistonsolver.math.BaseConversionUtil;
+import net.longct.pistonsolver.math.Vector2;
 
 import java.util.Arrays;
-
-import static math.BaseConversionUtil.getTinyBit;
 
 public class Board {
     public static final int MIN_SEED = 0;
