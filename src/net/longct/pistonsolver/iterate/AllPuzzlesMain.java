@@ -1,8 +1,8 @@
-package iterate;
+package net.longct.pistonsolver.iterate;
 
-import puzzle.Board;
-import solver.Node;
-import solver.SolutionTree;
+import net.longct.pistonsolver.puzzle.Board;
+import net.longct.pistonsolver.solver.Node;
+import net.longct.pistonsolver.solver.SolutionTree;
 
 import java.io.BufferedWriter;
 import java.io.File;

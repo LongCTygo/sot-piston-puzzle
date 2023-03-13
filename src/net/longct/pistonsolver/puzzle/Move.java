@@ -1,4 +1,4 @@
-package puzzle;
+package net.longct.pistonsolver.puzzle;
 
 public class Move {
 

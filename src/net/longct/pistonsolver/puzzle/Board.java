@@ -1,11 +1,9 @@
-package puzzle;
+package net.longct.pistonsolver.puzzle;
 
-import math.BaseConversionUtil;
-import math.Vector2;
+import net.longct.pistonsolver.math.BaseConversionUtil;
+import net.longct.pistonsolver.math.Vector2;
 
 import java.util.Arrays;
-
-import static math.BaseConversionUtil.getTinyBit;
 
 public class Board {
     public static final int MIN_SEED = 0;
@@ -45,11 +43,7 @@ public class Board {
     }
 
     public Board(int seed) {
-        if (seed < MIN_SEED || seed > MAX_SEED) {
-            throw new IllegalArgumentException("Seed must be in range of 0 and 8388607");
-        }
-        String s = BaseConversionUtil.binToHex(Integer.toBinaryString(seed));
-        parseSeed(s);
+        parseSeed(seed);
     }
 
     public int[][] getBoard() {
@@ -60,15 +54,13 @@ public class Board {
         return goal;
     }
 
-
-    @Deprecated
-    public String getSeed() {
+    public int getSeed(){
         Vector2 go = new Vector2(goal);
-        // 1 ignored
-        StringBuilder sb = new StringBuilder("0");
+        int seed = 0;
+        // 0 ignored
         // 1-2 rotation value
         int rotationalValue = getRotationalValue();
-        sb.append(getTinyBit(rotationalValue));
+        seed += (int) Math.pow(2,21) * rotationalValue;
         // Rotate player back to III
         int[][] bo = null;
         switch (rotationalValue) {
@@ -90,84 +82,32 @@ public class Board {
         int px = -1;
         int py = -1;
         // 5 - 19 board
-        StringBuilder b = new StringBuilder();
+        int k = 18;
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 if (bo[x][y] == 2) {
                     px = x;
                     py = y;
                 } else {
-                    b.append(bo[x][y]);
+                    seed += (int) Math.pow(2,k) * bo[x][y];
+                    k--;
                 }
             }
         }
-        // throws ArrayIndexOutOfBoundException if board does not contain player
-        sb.append(px - 2);
-        sb.append(py);
-        sb.append(b);
+        // throws IllegalStateException if board does not contain player, or multiple players
+        if (px == -1 && py == -1){
+            throw new IllegalStateException("The board does not have a player.\n" + this);
+        }
+        if (k != 3){
+            throw new IllegalStateException("The board has more than one player.\n" + this);
+        }
+        seed += (int) Math.pow(2,20) * (px -2)
+                + (int) Math.pow(2,19) * (py);
         // 20 - 23 goal
-        sb.append(getTinyBit(go.x));
-        sb.append(getTinyBit(go.y));
+        seed += 4 * go.x;
+        seed += 1 * go.y;
         //Seed
-        String binarySeed = sb.toString();
-        StringBuilder hexSeed = new StringBuilder(BaseConversionUtil.binToHex(binarySeed));
-        while (hexSeed.length() < 6) {
-            hexSeed.insert(0, "0");
-        }
-        return hexSeed.toString();
-    }
-
-    public int getDecimalSeed(){
-        Vector2 go = new Vector2(goal);
-        // 1 ignored
-        StringBuilder sb = new StringBuilder("0");
-        // 1-2 rotation value
-        int rotationalValue = getRotationalValue();
-        sb.append(getTinyBit(rotationalValue));
-        // Rotate player back to III
-        int[][] bo = null;
-        switch (rotationalValue) {
-            case 0:
-                bo = copyOfBoard();
-                break;
-            case 1:
-                bo = leftR();
-                go.leftRotateBoard();
-                break;
-            case 2:
-                bo = fullR();
-                go.fullRotateBoard();
-                break;
-            case 3:
-                bo = rightR();
-                go.rightRotateBoard();
-                break;
-        }
-        // 3-4 player location
-        int px = -1;
-        int py = -1;
-        // 5 - 19 board
-        StringBuilder b = new StringBuilder();
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                if (bo[x][y] == 2) {
-                    px = x;
-                    py = y;
-                } else {
-                    b.append(bo[x][y]);
-                }
-            }
-        }
-        // throws ArrayIndexOutOfBoundException if board does not contain player
-        sb.append(px - 2);
-        sb.append(py);
-        sb.append(b);
-        // 20 - 23 goal
-        sb.append(getTinyBit(go.x));
-        sb.append(getTinyBit(go.y));
-        //Seed
-        String binarySeed = sb.toString();
-        return Integer.parseInt(binarySeed,2);
+        return seed;
     }
 
 
@@ -376,7 +316,41 @@ public class Board {
         return newBoard;
     }
 
-    public void parseSeed(String seed) {
+    private void parseSeed(int seed){
+        int[] bitArray = BaseConversionUtil.toBinaryArray(seed);
+        //first 9 bits are ignored
+        // 9-10 Rotation value
+        int rotationValue = bitArray[9] * 2 + bitArray[10] * 2;
+        // 11-12 Player Position
+        int px = bitArray[11] + 2;
+        int py = bitArray[12];
+        board[px][py] = 2;
+        // 13 - 27 Board
+        int k = 13;
+        for (int x = 0; x < 4; x++) {
+            boolean rowOfPlayer = (px == x);
+            for (int y = 0; y < 4; y++) {
+                if (rowOfPlayer && py == y) {
+                    continue;
+                }
+                board[x][y] = bitArray[k];
+                k++;
+            }
+        }
+        //28-31 Goal
+        int gx = bitArray[28] * 2 + bitArray[29];
+        int gy = bitArray[30] * 2 + bitArray[31];
+        goal = new Vector2(gx, gy);
+        // Rotate
+        switch (rotationValue) {
+            case 1 -> rightRotate();
+            case 2 -> rotate180();
+            case 3 -> leftRotate();
+        }
+    }
+
+    @Deprecated
+    private void parseSeed(String seed) {
         // Check seed length
         if (seed.length() > 6) {
             throw new IllegalArgumentException("Seed length exceed 6.");
@@ -386,6 +360,7 @@ public class Board {
                 seedBuilder.insert(0, "0");
             } while (seedBuilder.length() < 6);
             seed = seedBuilder.toString();
+
         }
         // Convert to binary
         String binarySeed = BaseConversionUtil.hexToBin(seed);
@@ -489,5 +464,38 @@ public class Board {
             }
         }
         return coal;
+    }
+
+    public static class BoardBuilder{
+        private int[][] board = new int[4][4];
+        private Vector2 goal;
+
+        public BoardBuilder(){}
+        public void setGoal(int x, int y){
+            goal = new Vector2(x,y);
+        }
+
+        public void setRow(int row, int[] args){
+            int r = 4 - row;
+            for (int i = 0; i < 4; i++){
+                board[r][i] = args[i];
+            }
+        }
+
+        public void setBoard(int[][] board){
+            if (board.length != 4){
+                throw new IllegalArgumentException("The argument for the board must be exactly 4x4");
+            }
+            for (int[] row : board){
+                if (row.length != 4){
+                    throw new IllegalArgumentException("The argument for the board must be exactly 4x4");
+                }
+            }
+            this.board = board.clone();
+        }
+
+        public Board build(){
+            return new Board(board,goal);
+        }
     }
 }

@@ -1,14 +1,15 @@
-package solver;
+package net.longct.pistonsolver.solver;
 
-import puzzle.Board;
-import puzzle.Move;
+import net.longct.pistonsolver.puzzle.Board;
+import net.longct.pistonsolver.puzzle.Move;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Stack;
 
 /**
  *
- * @author ADMIN
+ * @author LongCT_
  */
 public class Node {
     final double SMART_LIMIT = 1.5;

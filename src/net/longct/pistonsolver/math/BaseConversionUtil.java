@@ -1,4 +1,4 @@
-package math;
+package net.longct.pistonsolver.math;
 
 public class BaseConversionUtil {
     public static String hexToBin(String hex){
@@ -40,5 +40,14 @@ public class BaseConversionUtil {
                 return "11";
         }
         throw new IllegalArgumentException("Cannot convert.");
+    }
+
+    public static int[] toBinaryArray(int x){
+        int[] array = new int[32];
+        for (int i = 31; i >= 0; i--) {
+            int mask = 1 << i;
+            array[31-i] = (x & mask) != 0 ? 1 : 0;
+        }
+        return array;
     }
 }
