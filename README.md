@@ -11,6 +11,11 @@ Alternatively, you can download the .jar file in the releases page. Once downloa
 - For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all the provided seeds and either solve them or provide an Exception and skip it.
 - Read below to see how seeds work.
 - Alternatively, have your first argument be '-loop', and the program will instead wait for you to supply the seeds whilst running. It will end once you give it an empty input.
+ - Open your console on your OS, then change your directory to the folder containing the downloaded jar.
+ - Run `java -jar PistonPuzzleSolver.jar (args)`
+ - For the arguments, supply an integer seed (range from 0 to 2^23 - 1, or 8388607), or multiple of them. The program will go through all of the provided seeds and either solve them or provide an Exception and skip it.
+ - Read below to see how seeds work.
+ - Alternatively, have your first argument be '-loop', and the program will instead wait for you to supply the seeds whilst running. It will end once you give it an empty input.
 
 **Common Exceptions:**
 
