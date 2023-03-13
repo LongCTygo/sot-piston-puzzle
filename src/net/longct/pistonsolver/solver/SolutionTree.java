@@ -19,6 +19,7 @@ public class SolutionTree {
         return root == null;
     }
 
+    @Deprecated
     public int solveBFS(int maxDepth, int maxSearch, boolean ignoreBadMoves, boolean printSol) {
         ArrayDeque<Node> queue = new ArrayDeque<>();
         ArrayList<Double> bestDist = new ArrayList<>();
@@ -69,5 +70,46 @@ public class SolutionTree {
             System.out.println("No solutions");
         }
         return -1;
+    }
+
+    public Node solveBFS(int maxDepth, int maxSearch, boolean ignoreBadMoves){
+        ArrayDeque<Node> queue = new ArrayDeque<>();
+        ArrayList<Double> bestDist = new ArrayList<>();
+
+        bestDist.add(root.board.getDistance());
+        int currentDepth = 0;
+        int currentProcess = 0;
+        queue.add(root);
+        while (!queue.isEmpty()){
+            Node p = queue.pop();
+            currentProcess++;
+            if (currentProcess > maxSearch) {
+                return null;
+            }
+            int depthP = p.depth();
+            double distP = p.board.getDistance();
+            if (depthP != currentDepth){
+                currentDepth = depthP;
+                bestDist.add(distP);
+            } else if (distP < bestDist.get(depthP)){
+                bestDist.set(depthP, distP);
+            }
+            int result = p.breadthSolve(maxDepth,depthP,distP);
+            if (result == -2){
+                break;
+            } else if (result == -1){
+                p.createChildren(ignoreBadMoves);
+                for (Node c : p.children){
+                    if (depthP <= 3 || c.board.getDistance() < bestDist.get(depthP - 4)){
+                        queue.add(c);
+                    }
+                }
+                //De-referencing children nodes
+                p.children.clear();
+            } else{
+                return p;
+            }
+        }
+        return null;
     }
 }

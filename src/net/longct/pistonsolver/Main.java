@@ -39,8 +39,16 @@ public class Main {
         System.out.printf("------------------- Seed '%s' -------------------\n", seed);
         try {
             int s = Integer.parseInt(seed);
-            SolutionTree st = new SolutionTree(new Node(new Board(s)));
-            st.solveBFS(20,10000000,true,true);
+            Board board = new Board(s);
+            SolutionTree st = new SolutionTree(new Node(board));
+//            st.solveBFS(20,10000000,true,true);
+            Node node = st.solveBFS(20, 10000000, true);
+            if (node != null){
+                node.printSolutions();
+            } else {
+                System.out.println(board);
+                System.out.println("No solutions");
+            }
             System.out.println();
         } catch (Exception ex){
             System.err.printf("Exception Caught for argument %s: %s\n",seed, ex.getClass().getName());
