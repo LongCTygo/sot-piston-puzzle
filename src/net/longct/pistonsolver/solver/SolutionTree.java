@@ -57,6 +57,8 @@ public class SolutionTree {
                         queue.add(c);
                     }
                 }
+                //De-referencing children nodes
+                p.children.clear();
             } else{
                 if (printSol) p.printSolutions();
                 return result;

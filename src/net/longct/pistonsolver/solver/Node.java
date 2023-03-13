@@ -5,6 +5,7 @@ import net.longct.pistonsolver.puzzle.Move;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  *
@@ -132,8 +133,8 @@ public class Node {
     }
 
     public void printSolutions(){
-        ArrayDeque<Board> stack1 = new ArrayDeque<>();
-        ArrayDeque<Move> stack2 = new ArrayDeque<>();
+        Stack<Board> stack1 = new Stack<>();
+        Stack<Move> stack2 = new Stack<>();
         Node p = this;
         while (p!=null){
             stack1.push(p.board);
