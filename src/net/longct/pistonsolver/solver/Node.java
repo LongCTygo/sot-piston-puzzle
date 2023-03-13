@@ -5,6 +5,7 @@ import net.longct.pistonsolver.puzzle.Move;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -133,28 +134,28 @@ public class Node {
     }
 
     public void printSolutions(){
-        Stack<Board> stack1 = new Stack<>();
-        Stack<Move> stack2 = new Stack<>();
         Node p = this;
+        LinkedList<Node> list = new LinkedList<>();
         while (p!=null){
-            stack1.push(p.board);
-            stack2.push(p.board.lastMove);
+            list.addFirst(p);
             p=p.parent;
         }
-        int size = stack1.size();
-        for (int i = 0; i < size; i++){
-            Board b = stack1.pop();
-            System.out.format("Step %d:\n", i);
-            System.out.println(b);
+        int i = 0;
+        for (Node node : list){
+            System.out.printf("Step %d:\n%s\n",i,node.board);
+            i++;
         }
-        System.out.println("[Sandy] Beep boop. My solution:");
-        for (int i = 0; i < size; i++){
-            Move ms = stack2.pop();
-            if (ms == null){
+        System.out.println("[Sandy] Beep boop, this is Sandy. My solution is: ");
+        i=1;
+        for (Node node : list){
+            Move move = node.board.lastMove;
+            if (move == null){
                 continue;
             }
-            System.out.format("%d. %s   ",i,ms);
+            System.out.printf("%d. %s ",i,move);
+            i++;
         }
+        System.out.println();
     }
 
     @Deprecated
