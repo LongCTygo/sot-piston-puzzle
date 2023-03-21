@@ -79,5 +79,7 @@ From a board, it will try out all 16 different moves, ignoring moves that does n
 - Improving the algorithms. And there are a lot to be improved.
 ## Note
 This program is designed as a way to study and do research. Through the use of this, you can learn how to tackle a puzzle like this as a human, find potential strategy and common patterns. This is **NOT** a program made to be used as a mean of cheating inside an environment like the Minecraft Championship, or to be expanded into programs that enable such acts. Please do not use this for those purposes.
+
+I am not a member of the Noxcrew, nor am I affiliated to the Noxcrew or the Minecraft Championship (MCC) in any way. This program is a fan-project.
 ## License
 Read [LICENSE](https://github.com/LongCTygo/sot-piston-puzzle/blob/master/LICENSE).
