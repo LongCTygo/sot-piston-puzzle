@@ -1,3 +1,4 @@
+# THIS PROJECT IS DEPRECATED. PLEASE REFER TO [HERE](https://github.com/LongCTygo/sot-piston-puzzle-gui) FOR THE LATEST VERSION
 # Sands Of Time's Piston Puzzle Solver
 A java program that can solve MCC's Sands Of Time's Piston Puzzle.
 What is the puzzle? Check out this [detailed document](https://docs.google.com/document/d/1ZbfKo57hn-H5eb_VkiYvJ5Ib-VdNfRtCjPyNy1HkyK8) made by edihau.
